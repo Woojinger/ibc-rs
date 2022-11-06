@@ -14,6 +14,7 @@ pub const ATTRIBUTE_CHAIN_ID_KEY: &str = "chain_id";
 pub const ATTRIBUTE_QUERY_HEIGHT_KEY: &str = "query_height";
 pub const ATTRIBUTE_QUERY_ID_KEY: &str = "query_id";
 pub const ATTRIBUTE_QUERY_PATH_KEY: &str = "query_path";
+pub const ATTRIB1UTE_QUERY_SENDER_KEY: &str = "sender";
 
 #[derive(Serialize, Clone, Debug, PartialEq, Eq)]
 pub struct SendPacket {
@@ -21,11 +22,18 @@ pub struct SendPacket {
 }
 
 impl SendPacket {
-    pub fn new(chain_id: String, id: String, path: String, height: String) -> SendPacket {
+    pub fn new(
+        chain_id: String,
+        id: String,
+        sender: String,
+        path: String,
+        height: String,
+    ) -> SendPacket {
         Self {
             packet: CrossChainQueryPacket {
                 chain_id,
                 id,
+                sender,
                 path,
                 height,
             },
@@ -57,6 +65,10 @@ impl TryFrom<SendPacket> for AbciEvent {
                 Tag {
                     key: Key::from_str(ATTRIBUTE_QUERY_ID_KEY).unwrap(),
                     value: Value::from_str(&value.packet.id).unwrap(),
+                },
+                Tag {
+                    key: Key::from_str(ATTRIB1UTE_QUERY_SENDER_KEY).unwrap(),
+                    value: Value::from_str(&value.packet.sender).unwrap(),
                 },
                 Tag {
                     key: Key::from_str(ATTRIBUTE_QUERY_PATH_KEY).unwrap(),

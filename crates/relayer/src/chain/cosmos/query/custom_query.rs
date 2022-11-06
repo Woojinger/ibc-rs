@@ -1,15 +1,6 @@
 use crate::chain::requests::CrossChainQueryRequest;
 use crate::chain::responses::CrossChainQueryResponse;
 use reqwest::{Client, Error};
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct MsgTransfer {
-    pub amount: String,
-    pub denom: String,
-    pub receiver: String,
-    pub sender: String,
-}
 
 pub async fn rest_query(
     client: &Client,
@@ -30,12 +21,14 @@ pub async fn rest_query(
             match data {
                 Ok(res) => Ok(CrossChainQueryResponse::new(
                     request.id,
+                    request.sender,
                     1,
                     res,
                     request.height,
                 )),
                 Err(e) => Ok(CrossChainQueryResponse::new(
                     request.id,
+                    request.sender,
                     2,
                     e.to_string(),
                     request.height,
@@ -44,6 +37,7 @@ pub async fn rest_query(
         }
         None => Ok(CrossChainQueryResponse::new(
             request.id,
+            request.sender,
             2,
             "".to_string(),
             request.height,

@@ -8,22 +8,24 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, Serialize, Deserialize, Eq, PartialEq)]
 pub struct CrossChainQueryResponse {
     pub id: String,
+    pub sender: String,
     pub result: i32,
     pub data: String,
     pub height: String,
 }
 
 impl CrossChainQueryResponse {
-    pub fn new(id: String, result: i32, data: String, height: String) -> Self {
+    pub fn new(id: String, sender: String, result: i32, data: String, height: String) -> Self {
         Self {
             id,
+            sender,
             result,
             data,
             height,
         }
     }
 
-    pub fn to_any<QueryingChain: ChainHandle>(&self, handle: &QueryingChain) -> Any {
+    pub fn to_any<QueryingChain: ChainHandle>(&self, _handle: &QueryingChain) -> Any {
         let mut encoded = Vec::new();
 
         let msg_submit_cross_chain_query_result = MsgSubmitCrossChainQueryResult {
@@ -31,7 +33,7 @@ impl CrossChainQueryResponse {
             query_height: self.height.parse().unwrap(),
             result: self.result,
             data: self.data.as_bytes().to_vec(),
-            sender: handle.get_signer().unwrap().to_string(),
+            sender: self.sender.clone(),
             proof_specs: vec![],
         };
         prost::Message::encode(&msg_submit_cross_chain_query_result, &mut encoded).unwrap();

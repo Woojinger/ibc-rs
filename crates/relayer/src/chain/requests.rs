@@ -392,6 +392,7 @@ pub struct QueryHostConsensusStateRequest {
 pub struct CrossChainQueryRequest {
     pub chain_id: String,
     pub id: String,
+    pub sender: String,
     pub path: String,
     pub height: String,
 }
@@ -404,6 +405,7 @@ impl TryFrom<&IbcEventWithHeight> for CrossChainQueryRequest {
             Some(packet) => Ok(CrossChainQueryRequest {
                 chain_id: packet.chain_id.to_string(),
                 id: packet.id.to_string(),
+                sender: packet.sender.to_string(),
                 path: packet.path.to_string(),
                 height: packet.height.to_string(),
             }),
