@@ -25,7 +25,7 @@ impl CrossChainQueryResponse {
         }
     }
 
-    pub fn to_any<QueryingChain: ChainHandle>(&self, _handle: &QueryingChain) -> Any {
+    pub fn to_any<QueryingChain: ChainHandle>(&self, handle: &QueryingChain) -> Any {
         let mut encoded = Vec::new();
 
         let msg_submit_cross_chain_query_result = MsgSubmitCrossChainQueryResult {
@@ -33,7 +33,7 @@ impl CrossChainQueryResponse {
             query_height: self.height.parse().unwrap(),
             result: self.result,
             data: self.data.as_bytes().to_vec(),
-            sender: self.sender.clone(),
+            sender: handle.get_signer().unwrap().to_string(),
             proof_specs: vec![],
         };
         prost::Message::encode(&msg_submit_cross_chain_query_result, &mut encoded).unwrap();
