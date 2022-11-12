@@ -26,7 +26,7 @@ impl TestOverrides for Ics31Test {
             String::from_utf8_lossy(&Command::new("uname").arg("-a").output().unwrap().stdout)
                 .to_string();
         let base_dir = format!(
-            "{}/src/tests/ics031_interchain_queries_implementation_2709",
+            "{}/src/tests/ics031_interchain_queries_implementation_2709/chain_binaries",
             env::current_dir().unwrap().to_string_lossy().to_string(),
         );
 
