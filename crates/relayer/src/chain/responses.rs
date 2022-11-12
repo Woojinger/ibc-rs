@@ -34,6 +34,7 @@ impl CrossChainQueryResponse {
             result: self.result,
             data: self.data.as_bytes().to_vec(),
             sender: handle.get_signer().unwrap().to_string(),
+            query_sender: self.sender.to_string(),
             proof_specs: vec![],
         };
         prost::Message::encode(&msg_submit_cross_chain_query_result, &mut encoded).unwrap();

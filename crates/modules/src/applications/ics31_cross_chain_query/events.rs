@@ -66,10 +66,10 @@ impl TryFrom<SendPacket> for AbciEvent {
                     key: Key::from_str(ATTRIBUTE_QUERY_ID_KEY).unwrap(),
                     value: Value::from_str(&value.packet.id).unwrap(),
                 },
-                // Tag {
-                //     key: Key::from_str(ATTRIB1UTE_QUERY_SENDER_KEY).unwrap(),
-                //     value: Value::from_str(&value.packet.sender).unwrap(),
-                // },
+                Tag {
+                    key: Key::from_str(ATTRIB1UTE_QUERY_SENDER_KEY).unwrap(),
+                    value: Value::from_str(&value.packet.sender).unwrap(),
+                },
                 Tag {
                     key: Key::from_str(ATTRIBUTE_QUERY_PATH_KEY).unwrap(),
                     value: Value::from_str(&value.packet.path).unwrap(),

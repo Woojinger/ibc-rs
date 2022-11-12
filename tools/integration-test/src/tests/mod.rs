@@ -20,8 +20,7 @@ pub mod supervisor;
 pub mod tendermint;
 pub mod ternary_transfer;
 pub mod transfer;
-
-pub mod test_ics_031_crosschain_query_implementation_2709;
+pub mod ics031_interchain_queries_implementation_2709;
 
 #[cfg(any(doc, feature = "ordered"))]
 pub mod ordered_channel;

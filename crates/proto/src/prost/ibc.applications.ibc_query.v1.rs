@@ -71,9 +71,9 @@ pub struct MsgSubmitCrossChainQuery {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitCrossChainQueryResponse {
     #[prost(string, tag="1")]
-    pub query_id: ::prost::alloc::string::String,
-    #[prost(uint64, tag="2")]
-    pub cap_key: u64,
+        pub id: ::prost::alloc::string::String,
+    #[prost(string, tag="2")]
+    pub cap_key: ::prost::alloc::string::String,
 }
 /// MsgSubmitCrossChainQueryResult
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -88,13 +88,33 @@ pub struct MsgSubmitCrossChainQueryResult {
     pub data: ::prost::alloc::vec::Vec<u8>,
     #[prost(string, tag="5")]
     pub sender: ::prost::alloc::string::String,
+    #[prost(string, tag="6")]
+    pub query_sender: ::prost::alloc::string::String,
     /// TODO: Proof specifications used in verifying counterparty state
-    #[prost(message, repeated, tag="6")]
+    #[prost(message, repeated, tag="7")]
     pub proof_specs: ::prost::alloc::vec::Vec<super::super::super::super::ics23::ProofSpec>,
 }
 /// MsgSubmitCrossChainQueryResultResponse
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitCrossChainQueryResultResponse {
+}
+/// MsgSubmitPruneCrossChainQueryResult
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSubmitPruneCrossChainQueryResult {
+    #[prost(string, tag="1")]
+    pub id: ::prost::alloc::string::String,
+    #[prost(string, tag="2")]
+    pub sender: ::prost::alloc::string::String,
+}
+/// MsgSubmitPruneCrossChainQueryResultResponse
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSubmitPruneCrossChainQueryResultResponse {
+    #[prost(string, tag="1")]
+    pub id: ::prost::alloc::string::String,
+    #[prost(enumeration="QueryResult", tag="2")]
+    pub result: i32,
+    #[prost(bytes="vec", tag="3")]
+    pub data: ::prost::alloc::vec::Vec<u8>,
 }
 /// IBCQueryPacketData defines a struct for the cross chain query packet payload
 #[derive(Clone, PartialEq, ::prost::Message)]
