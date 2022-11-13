@@ -453,6 +453,9 @@ fn extract_cross_chain_query_packet_from_tx(
             application_events::ATTRIBUTE_CHAIN_ID_KEY => {
                 cross_chain_query_packet.chain_id = value.to_string()
             }
+            application_events::ATTRIB1UTE_QUERY_SENDER_KEY => {
+                cross_chain_query_packet.sender = value.to_string()
+            }
             application_events::ATTRIBUTE_QUERY_ID_KEY => {
                 cross_chain_query_packet.id = value.to_string()
             }
