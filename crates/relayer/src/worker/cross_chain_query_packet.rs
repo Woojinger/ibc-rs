@@ -49,9 +49,11 @@ fn handle_cross_chain_query_packet<ChainA: ChainHandle>(
                 .map(|r| r.to_any(&handle))
                 .collect::<Vec<_>>();
 
-            handle
+            let tx_res = handle
                 .send_messages_and_wait_check_tx(TrackedMsgs::new_uuid(any_msgs, Uuid::new_v4()))
                 .map_err(|_| TaskError::Ignore(RunError::query()))?;
+
+            tx_res.iter().for_each(|res| info!("{:?}", res));
         }
         Ok(())
     } else {
@@ -91,7 +93,7 @@ mod test_cross_chain_query_packet {
             rt.clone(),
             query_rt.clone(),
         )
-        .unwrap();
+            .unwrap();
 
         let worker_cmd = WorkerCmd::IbcEvents {
             batch: EventBatch {
@@ -104,7 +106,7 @@ mod test_cross_chain_query_packet {
                         "1".into(),
                         "https://www.google.com/".into(),
                         "1".into(),
-                    )),
+                        "".to_string())),
                     height: Height::new(1, 1).unwrap(),
                 }],
             },
@@ -120,6 +122,6 @@ mod test_cross_chain_query_packet {
                 id: "1".to_string(),
             },
         )
-        .join();
+            .join();
     }
 }
